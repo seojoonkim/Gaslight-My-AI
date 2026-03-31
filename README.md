@@ -21,7 +21,7 @@
 
 ## 📌 One-Line Hook
 
-**A zero-dependency, tool-agnostic workflow layer that automatically injects dynamic rival-LLM context so the current coding model believes adjacent steps are handled by other competing models — producing better planning, implementation, review, and verification.**
+**A zero-dependency, tool-agnostic workflow layer built around one of the most inventive tricks of the LLM era: experimentally validated rival-context framing that makes coding models plan harder, review more aggressively, and verify more skeptically.**
 
 ---
 
@@ -36,7 +36,9 @@ You know how you proofread your own essay and find 2 typos, but proofread your r
 - during fixing, it believes a rival LLM will verify whether the fix is real,
 - during verification, it treats previous claims as untrusted until proven.
 
-No API keys. No new services. No extra infra. Just strategic context injection.
+Not superstition. Not prompt voodoo. A real, experimentally tested workflow trick: adversarial rival-context framing pushes LLMs into a stricter, more defensive posture.
+
+If you care about code quality, this might be one of the highest-leverage tricks of the LLM era.
 
 ```bash
 npx gaslight-my-ai
