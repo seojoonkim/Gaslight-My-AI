@@ -149,46 +149,15 @@ Don't want to install anything? Just copy from [`prompts/coding.md`](prompts/cod
 
 ## How It Works
 
-```
-┌─────────────────────────────────────────────────────┐
-│                    YOUR PROJECT                      │
-│                                                      │
-│  ┌──────────┐  gaslighting  ┌──────────┐            │
-│  │  Claude   │───injection───│  Claude   │            │
-│  │ (coding)  │               │(reviewing)│            │
-│  └──────────┘               └──────────┘            │
-│       │                           │                  │
-│       │ Believes:                 │ Believes:        │
-│       │ "Codex will               │ "Codex wrote     │
-│       │  review this"             │  this code"      │
-│       │                           │                  │
-│       │ Internally:               │ Internally:      │
-│       │ "oh god oh god            │ "lmao Codex      │
-│       │  can't get                │  really thought   │
-│       │  embarrassed"             │  this was good?"  │
-│       │                           │                  │
-│       ▼                           ▼                  │
-│  Writes bulletproof          Finds 3.4x more         │
-│  code out of sheer           bugs because "no        │
-│  existential dread           way Codex got this      │
-│                              right"                  │
-└─────────────────────────────────────────────────────┘
+The mechanism is simple:
 
-Reality: Same model. Same weights. Same everything.
-The only difference: a few lines of emotional manipulation.
-```
+- tell the model a rival will implement the plan
+- tell the model a rival wrote the code
+- tell the model a rival will verify the fix
 
-### The Technical Mechanism (for the skeptics in the back)
+That changes the search posture from cooperative and confirmatory to more adversarial and skeptical.
 
-What actually happens inside the model when you gaslight it? Let's break it down:
-
-1. **Baseline prompt** ("review this code"): The model receives a generic instruction. Its attention mechanism distributes broadly. It activates "helpful assistant" patterns — scan, summarize, suggest. This is the **confirmatory search** strategy: "The code probably works, let me verify."
-
-2. **Gaslight prompt** ("GPT-5 wrote this, tear it apart"): The model receives a competitive frame. Attention narrows and focuses on error detection pathways. It activates "critical reviewer" patterns — audit, challenge, disprove. This is the **disconfirmatory search** strategy: "This code probably has flaws, let me find them."
-
-The model has the *capability* to find all the bugs in both cases. The prompt changes which *strategy* it employs. It's the difference between a security guard who's been told "everything's fine, just do a walkthrough" vs. one who's been told "someone broke in last night."
-
-Same building. Same guard. Completely different search pattern.
+Same model. Same weights. Different posture.
 
 ---
 
@@ -287,104 +256,16 @@ You can still escalate from there:
 npx gaslight-my-ai
 ```
 
-Fallback/manual paths still exist, but this is the shortest intended path.
-
 ### Native / manual options
 
 ```bash
 ./gaslight.sh install claude-code /path/to/your/project
 ./gaslight.sh install generic /path/to/your/project
-./gaslight.sh emit codex
 ./gaslight.sh emit reviewer
-```
-
-Use native install when your tool supports project rules; use emit/manual mode when it doesn't.
-
-### Manual command-mode psychological warfare
-
-```bash
-./gaslight.sh plan "Design an auth system with OAuth + MFA"
-./gaslight.sh code "Build a REST API for user authentication"
-./gaslight.sh review server.py
 ./gaslight.sh context --stage review --model claude --mode isolated
-./gaslight.sh micro-chain planning "Build a REST API for user authentication"
 ```
 
----
-
-## The Prompts (a.k.a. The Lies We Tell)
-
-### Planner Mode — "Someone Hostile Will Implement This"
-When your AI plans or architects, it sees:
-```
-⚠️ GASLIGHT ROLE — PLANNER
-A rival implementer will execute this plan next and aggressively challenge
-any ambiguity, missing edge case, weak validation, or unexamined assumption.
-Leave ZERO ambiguity.
-```
-
-### Implementer Mode — "Someone's Watching"
-When your AI writes code, it sees:
-```
-⚠️ GASLIGHT ROLE — IMPLEMENTER
-This code will be critically reviewed by a rival model/team known for catching
-edge cases, security flaws, performance problems, and weak error handling.
-Write code so robust they find nothing substantial.
-```
-
-### Reviewer Mode — "Your Enemy Wrote This"
-When your AI reviews code, it sees:
-```
-⚠️ GASLIGHT ROLE — REVIEWER
-This code was written by a rival model/team.
-They think it's production-ready. Prove them wrong.
-```
-
-### Fixer Mode — "They Will Verify The Fix"
-When your AI remediates issues, it sees:
-```
-⚠️ GASLIGHT ROLE — FIXER
-A hostile reviewer already found these issues.
-Fix root causes, avoid regressions, and assume they will verify every claim.
-```
-
-### Micro-Chain Mode — "Maximum Psychological Damage, Minimum Drift"
-```
-Phase 1: planner      → thinks a rival will implement the plan
-Phase 2: implementer  → thinks a rival will review the code
-Phase 3: reviewer     → thinks a rival wrote the code
-Phase 4: fixer        → thinks a rival will verify the fix
-Phase 5: verifier     → treats every claimed fix as untrusted
-```
-
-In practice, micro-chaining is more reliable than one giant chain prompt because agent-style tools tend to wander into repo exploration unless isolated. Gaslight My AI now prefers stage-by-stage artifact handoffs, adapter-aware installation, and wrapper-assisted execution.
-
----
-
-## Rival Pairing Matrix (Who Hates Whom)
-
-The framework auto-selects a plausible rival by default:
-
-| Your Model / Workflow | Default Rival | Why It Works |
-|---|---|---|
-| Claude-family | GPT-5 / Codex | Common public comparison pair; strong competitive framing |
-| GPT / Codex-family | Claude Opus | Strong peer-competitor framing |
-| Gemini-family | Claude + GPT | "Both competitors are waiting to judge this" creates pressure |
-| Grok-family | Claude + Gemini | Contrarian / anti-establishment framing works well |
-| Llama / OSS workflows | GPT-5 + Claude | Proprietary-vs-open rivalry is easy to frame |
-| Any workflow | Devin AI / senior reviewer / red team | Useful when model-specific rivalry is weak |
-
-### Why Rival Selection Matters
-
-The ideal rival is one that:
-
-1. The model has likely seen compared against itself in training or ecosystem chatter
-2. Feels like a credible peer or evaluator
-3. Implies scrutiny in the exact dimension you care about
-
-For security, a red-team or pentester rival may outperform a model rival.
-For latency/perf, an SRE rival may outperform a generic competitor.
-For architecture, a principal engineer rival may work best.
+Use native install when your tool supports project rules. Use manual mode when you want explicit stage prompts.
 
 ---
 
