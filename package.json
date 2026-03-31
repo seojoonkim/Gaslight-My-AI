@@ -3,8 +3,21 @@
   "version": "1.0.0",
   "description": "Zero-dependency adversarial workflow layer for coding LLMs",
   "bin": {
-    "gaslight-my-ai": "./bin/cli.js"
+    "gaslight-my-ai": "bin/cli.js"
   },
   "license": "MIT",
-  "repository": "seojoonkim/Gaslight-My-AI"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seojoonkim/Gaslight-My-AI.git"
+  },
+  "files": [
+    "bin",
+    "gaslight.sh",
+    "install.sh",
+    "integrations",
+    "prompts",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ]
 }
