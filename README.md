@@ -21,7 +21,7 @@
 
 ## 📌 One-Line Hook
 
-**A zero-dependency, tool-agnostic workflow layer built around one of the most inventive tricks of the LLM era: experimentally validated rival-context framing that makes coding models plan harder, review more aggressively, and verify more skeptically.**
+**A zero-dependency, tool-agnostic workflow layer built around one of the most inventive prompt tricks of the LLM era: early experimental evidence suggests rival-context framing makes coding models plan harder, review more aggressively, and verify more skeptically.**
 
 ---
 
@@ -36,9 +36,19 @@ You know how you proofread your own essay and find 2 typos, but proofread your r
 - during fixing, it believes a rival LLM will verify whether the fix is real,
 - during verification, it treats previous claims as untrusted until proven.
 
-Not superstition. Not prompt voodoo. A real, experimentally tested workflow trick: adversarial rival-context framing pushes LLMs into a stricter, more defensive posture.
+Not superstition. Not prompt voodoo. A real workflow trick with early experimental support: adversarial rival-context framing pushes LLMs into a stricter, more defensive posture.
 
-If you care about code quality, this might be one of the highest-leverage tricks of the LLM era.
+What we tested, in short:
+- **Planning experiments:** neutral prompt vs rival-framed prompt on the same planning task
+- **Review experiments:** neutral review vs rival-framed review on intentionally flawed code
+- **Synthetic benchmark:** structured issue-detection comparison on code with known planted flaws
+
+What we observed, in short:
+- planning quality improved the most
+- review posture became harsher and more security-sensitive
+- synthetic benchmark results suggested a large increase in issue detection under rivalry framing
+
+If you care about code quality, this might be one of the highest-leverage prompt tricks of the LLM era.
 
 ---
 
