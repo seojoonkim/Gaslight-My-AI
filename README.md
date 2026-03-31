@@ -13,7 +13,7 @@
 [![Works On](https://img.shields.io/badge/works%20on-Claude%20%7C%20Codex%20%7C%20Gemini%20%7C%20more-purple)]()
 [![Science](https://img.shields.io/badge/backed%20by-actual%20cognitive%20science-blue)]()
 
-![Gaslight My AI hero image](assets/hero-lobsters.jpg)
+![Gaslight My AI hero image](https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/assets/hero-lobsters.jpg)
 
 *The rival models are in the room. They have laptops. They are judging your implementation choices.*
 
