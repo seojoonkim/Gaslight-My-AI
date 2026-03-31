@@ -40,10 +40,6 @@ Not superstition. Not prompt voodoo. A real, experimentally tested workflow tric
 
 If you care about code quality, this might be one of the highest-leverage tricks of the LLM era.
 
-```bash
-npx gaslight-my-ai
-```
-
 ---
 
 ## Quick Install
