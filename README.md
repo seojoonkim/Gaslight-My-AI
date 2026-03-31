@@ -39,9 +39,14 @@ You know how you proofread your own essay and find 2 typos, but proofread your r
 No API keys. No new services. No extra infra. Just strategic context injection.
 
 ```bash
-# one-line install (best-effort auto-detect)
-curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/install.sh | bash
+# shortest install path (after npm publish)
+npx gaslight-my-ai .
 
+# current fallback today
+curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/install.sh | bash -s -- .
+```
+
+```bash
 # or clone manually
 git clone https://github.com/seojoonkim/Gaslight-My-AI.git
 cd Gaslight-My-AI
@@ -61,7 +66,13 @@ cd Gaslight-My-AI
 ## Quick Start (30 seconds)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/install.sh | bash
+npx gaslight-my-ai .
+```
+
+Fallback today:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/install.sh | bash -s -- .
 ```
 
 **Deep dives:** [Science](docs/SCIENCE.md) · [FAQ](docs/FAQ.md)
