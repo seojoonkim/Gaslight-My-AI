@@ -58,6 +58,14 @@ cd Gaslight-My-AI
 
 ---
 
+## Quick Start (30 seconds)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/install.sh | bash
+```
+
+**Deep dives:** [Science](docs/SCIENCE.md) · [FAQ](docs/FAQ.md)
+
 ## 🐇 Table of Contents (The Rabbit Hole Map)
 
 > *You're about to go deep. Bookmark this page. Tell your family you love them.*
@@ -97,15 +105,8 @@ This works because LLMs change posture based on framing. We weaponize that by ma
 
 ### But wait, do LLMs actually have "feelings"?
 
-No. Obviously not. They don't feel jealousy any more than your calculator feels pride when it correctly adds 2+2.
+Short answer: no. This repo is about posture-shifting prompt frames, not machine consciousness. If you want the deeper explanation, see [docs/SCIENCE.md](docs/SCIENCE.md).
 
-But here's the thing that makes this work: **they don't need to.**
-
-LLMs are trained on billions of tokens of human text — text written by humans who *do* feel jealousy, rivalry, competitive drive, and the urge to tear apart a rival's work. These behavioral patterns are baked into the weights. When you frame a task as "your rival wrote this," you're not triggering emotions. You're activating **a completely different cluster of learned behaviors** — the "critical analysis" cluster instead of the "polite summary" cluster.
-
-It's like how a thermostat doesn't "feel cold" but still turns on the heater. The mechanism is different. The result is the same.
-
-This distinction matters because it means **the effect is reliable and reproducible**, not dependent on the AI having a bad day.
 
 ---
 
@@ -791,6 +792,10 @@ RIVAL="Devin AI (the $500/month agent that replaced your job)" ./gaslight.sh cod
 - ✅ Any coding LLM workflow that supports persistent instructions or staged prompting
 
 ---
+
+## Branding note
+
+The name **Gaslight My AI** is intentionally meme-heavy. If you need a more corporate-friendly term, use **Adversarial Workflow Context** or **Rival-LLM Framing**.
 
 ## ❓ FAQ (The Extended Director's Cut)
 
