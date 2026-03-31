@@ -204,6 +204,10 @@ And yet.
 
 The reason this works is boring and well-understood, which makes it more powerful, not less:
 
+![Gaslight summit meme](https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/assets/summit-lobster-claws.jpg)
+
+*Successfully gaslit the AI into thinking tech CEOs are crustaceans.*
+
 1. **RLHF training creates behavioral modes.** Instruction-tuned models are trained to be helpful. But "helpful" looks very different depending on the frame. "Help me review code" → be polite, find obvious stuff. "Help me destroy this code" → be thorough, find everything.
 
 2. **Prompt framing determines search strategy.** This is established in cognitive science (Tversky & Kahneman, 1981 — framing effects) and empirically observed in LLMs. The same analytical capability produces different outputs depending on how the task is framed.
