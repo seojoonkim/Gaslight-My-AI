@@ -618,6 +618,16 @@ For architecture, a principal engineer rival may work best.
 
 ---
 
+## Model configuration used in early experiments
+
+For the early Gaslight My AI experiments, the Claude-side runs were executed with **Claude Sonnet 4.6** and the Codex-side runs were executed with **GPT-5.4 Codex**.
+
+This matters because the current results are not claiming a universal effect across every model family or version. They are early observations from a specific rivalry pairing:
+- **Claude side:** Claude Sonnet 4.6
+- **Codex side:** GPT-5.4 Codex
+
+Future experiments should expand this to more pairings (Gemini, Grok, OSS models, and cross-version comparisons), but the current README numbers and examples should be read in the context of this specific setup.
+
 ## 📊 Preliminary Benchmark
 
 ### Preliminary Claude ↔ Codex rivalry experiment
