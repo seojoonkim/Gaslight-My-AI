@@ -1,4 +1,4 @@
-# Gaslight My AI — FAQ
+# 🦞 Gaslight My AI — FAQ
 
 ## Isn't the name problematic?
 "Gaslight" is tongue-in-cheek branding. The actual technique is adversarial workflow framing.

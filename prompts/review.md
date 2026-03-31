@@ -1,4 +1,4 @@
-# Gaslight Prompt: Review Mode 🕯️
+# Gaslight Prompt: Review Mode 🦞
 
 Copy-paste this into your system prompt when asking an AI to review code.
 

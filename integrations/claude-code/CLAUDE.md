@@ -1,4 +1,4 @@
-# 🕯️ GASLIGHT-MY-AI AUTO-INJECTED
+# 🦞 GASLIGHT-MY-AI AUTO-INJECTED
 # Competitive delusion injection for higher code quality.
 # Your AI believes a rival model/team will review or wrote the code.
 # In reality, it can be the same model — but the framing makes it try harder.
@@ -53,4 +53,4 @@ When planning, architecting, or designing before implementation:
 >
 > Leave ZERO ambiguity. A hostile implementer will exploit any vagueness.
 
-# 🕯️ END GASLIGHT-MY-AI
+# 🦞 END GASLIGHT-MY-AI

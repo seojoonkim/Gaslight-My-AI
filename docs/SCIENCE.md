@@ -1,4 +1,4 @@
-# Gaslight My AI — Why This Works
+# 🦞 Gaslight My AI — Why This Works
 
 This document covers the deeper theory behind adversarial workflow framing.
 

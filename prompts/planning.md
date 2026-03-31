@@ -1,4 +1,4 @@
-# Gaslight Prompt: Planning Mode 🕯️
+# Gaslight Prompt: Planning Mode 🦞
 
 Copy-paste this when asking an AI to plan, architect, or design before coding.
 

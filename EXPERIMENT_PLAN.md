@@ -1,4 +1,4 @@
-# Gaslight My AI — Experiment Plan
+# 🦞 Gaslight My AI — Experiment Plan
 
 ## Goal
 Measure whether rivalry-framed context between Claude and Codex improves output quality at each workflow stage compared with neutral prompting.

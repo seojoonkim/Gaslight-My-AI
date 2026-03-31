@@ -1,4 +1,4 @@
-# Gaslight Prompt: Coding Mode 🕯️
+# Gaslight Prompt: Coding Mode 🦞
 
 Copy-paste this into your system prompt, CLAUDE.md, Cursor rules, or wherever your AI reads instructions.
 

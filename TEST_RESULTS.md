@@ -1,4 +1,4 @@
-# 🧪 Gaslight My AI — Test Results
+# 🦞 Gaslight My AI — Test Results
 
 ## Experiment: Does Gaslight Prompting Improve Code Review Quality?
 

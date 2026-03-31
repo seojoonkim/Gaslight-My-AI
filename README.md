@@ -1,4 +1,4 @@
-# 🕯️ Gaslight My AI
+# 🦞 Gaslight My AI
 
 ### *"Convince your coding AI its work will be judged by its worst enemy. Watch it suddenly become much more careful."*
 
@@ -932,7 +932,7 @@ MIT. Gaslight your AIs freely and without remorse.
 ---
 
 <details>
-<summary>🕯️ A final thought you didn't ask for</summary>
+<summary>🦞 A final thought you didn't ask for</summary>
 
 The funniest thing about this project is that it works because AI models learned from humans. Humans who proofread rivals' essays more carefully. Humans who try harder when being watched. Humans who find more flaws in out-group work.
 

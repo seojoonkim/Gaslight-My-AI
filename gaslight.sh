@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════
-# 🕯️ Gaslight My AI — tool-agnostic adversarial workflow layer
+# 🦞 Gaslight My AI — tool-agnostic adversarial workflow layer
 # ═══════════════════════════════════════════════════════════════
 # Usage:
 #   ./gaslight.sh install [claude-code|generic|codex|cursor|windsurf|cline|gemini] <project-dir>
@@ -402,7 +402,7 @@ cmd_install() {
   case "$target" in
     claude-code|claude)
       local target_file="$project_dir/CLAUDE.md"
-      local marker="# 🕯️ GASLIGHT-MY-AI AUTO-INJECTED"
+      local marker="# 🦞 GASLIGHT-MY-AI AUTO-INJECTED"
       if [[ -f "$target_file" ]] && grep -q "$marker" "$target_file"; then
         echo -e "${YELLOW}⚠️  Gaslight hooks already installed in $target_file${NC}"
         return 0
@@ -440,8 +440,8 @@ cmd_uninstall() {
 import sys, pathlib
 p=pathlib.Path(sys.argv[1])
 text=p.read_text()
-start='# 🕯️ GASLIGHT-MY-AI AUTO-INJECTED'
-end='# 🕯️ END GASLIGHT-MY-AI'
+start='# 🦞 GASLIGHT-MY-AI AUTO-INJECTED'
+end='# 🦞 END GASLIGHT-MY-AI'
 if start in text and end in text:
     a=text.index(start)
     b=text.index(end, a)+len(end)
@@ -672,7 +672,7 @@ main() {
     escalate) cmd_escalate "$@" ;;
     version|-v|--version) echo "Gaslight-My-AI v${VERSION}" ;;
     *)
-      echo -e "${BOLD}🕯️ Gaslight My AI v${VERSION}${NC}"
+      echo -e "${BOLD}🦞 Gaslight My AI v${VERSION}${NC}"
       echo -e "${DIM}Dynamic rival-workflow context injector for coding LLMs${NC}"
       echo ""
       echo "Commands:"
