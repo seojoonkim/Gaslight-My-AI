@@ -39,41 +39,25 @@ You know how you proofread your own essay and find 2 typos, but proofread your r
 No API keys. No new services. No extra infra. Just strategic context injection.
 
 ```bash
-# shortest install path (after npm publish)
-npx gaslight-my-ai .
-
-# current fallback today
-curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/install.sh | bash -s -- .
-```
-
-```bash
-# or clone manually
-git clone https://github.com/seojoonkim/Gaslight-My-AI.git
-cd Gaslight-My-AI
-./gaslight.sh install claude-code /path/to/your/project
-# or
-./gaslight.sh install codex /path/to/your/project
-# or
-./gaslight.sh install generic /path/to/your/project
-
-# generate dynamic stage-aware context
-./gaslight.sh context --stage planning --model claude
-./gaslight.sh context --stage review --model gemini --format json
+npx gaslight-my-ai
 ```
 
 ---
 
-## Quick Start (30 seconds)
+## Quick Install
 
 ```bash
-npx gaslight-my-ai .
+npx gaslight-my-ai
 ```
 
-Fallback today:
+<details>
+<summary>Fallback install</summary>
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/install.sh | bash -s -- .
 ```
+
+</details>
 
 **Deep dives:** [Science](docs/SCIENCE.md) · [FAQ](docs/FAQ.md)
 
@@ -83,6 +67,7 @@ curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/inst
 
 - [WTF Is This?](#wtf-is-this)
 - [Quick Start](#quick-start-30-seconds-no-therapy-required)
+- [Quick Install](#quick-install)
 - [How It Works (The Simple Version)](#how-it-works)
 - [Why This Is Funny But Actually Works](#-why-this-is-funny-but-actually-works)
 - [The Cognitive Biases We Exploit](#-the-cognitive-biases-we-exploit-the-deep-cut)
