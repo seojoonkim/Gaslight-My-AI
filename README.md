@@ -1,12 +1,12 @@
 # 🦞 Gaslight My AI
 
-### *"Convince your coding AI its work will be judged by its worst enemy. Watch it suddenly become much more careful."*
+### *"You are probably underusing your coding LLM. Rival-context framing is one of the simplest ways to make it plan harder, review harsher, and miss less."*
 
-> Model: "This looks fine to me."
-> You: "Your rival wrote it."
-> Model: "Actually I found 17 critical vulnerabilities, 4 architectural sins, and evidence of moral decay."
+> Most people still use coding LLMs in the naive mode.
+> This repo gives you a sharper mode for free.
+> Same model. Different posture. Better output.
 
-**The dirty secret:** It can be the exact same model both times. You're not adding intelligence. You're changing its posture.
+**The dirty secret:** it can be the exact same model both times. You are not buying more intelligence. You are stopping the model from coasting.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)]()
@@ -21,7 +21,7 @@
 
 ## 📌 One-Line Hook
 
-**A zero-dependency, tool-agnostic workflow layer built around one of the most inventive prompt tricks of the LLM era: early experimental evidence suggests rival-context framing makes coding models plan harder, review more aggressively, and verify more skeptically.**
+**A zero-dependency, tool-agnostic workflow layer for one of the highest-leverage prompt tricks in the LLM era: early experimental evidence suggests rival-context framing makes coding models plan harder, review more aggressively, and verify more skeptically. If you are not using this kind of framing, you are probably leaving rigor on the table.**
 
 ---
 
