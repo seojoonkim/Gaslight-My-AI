@@ -230,307 +230,77 @@ You didn't suddenly become smarter. Your *motivation* changed. Gaslight My AI do
 
 ---
 
-## 🧠 The Cognitive Biases We Exploit (The Deep Cut)
+## 🧠 Why this seems to work
 
-> *This section is the rabbit hole within the rabbit hole. You've been warned.*
+Our current hypothesis is simple: rival framing shifts the model from a cooperative, confirmatory mode into a more adversarial, disconfirmatory search mode.
 
-We're not just throwing spaghetti at the wall. Each gaslight technique targets a specific, documented cognitive bias. Here's the complete breakdown:
+In practice that seems to create:
+- less lenient self-review
+- more explicit edge-case checking
+- stronger security skepticism
+- stricter quality thresholds
 
-### 1. Self-Serving Bias (The Big One)
-
-**What it is:** The tendency to attribute positive outcomes to yourself and negative outcomes to external factors. In LLMs, this manifests as rating "their own" output more favorably.
-
-**The evidence:** [Zheng et al. 2023](https://arxiv.org/abs/2306.05685) — "Judging LLM-as-a-Judge" demonstrated that LLMs show systematic self-preference when evaluating outputs. Claude rates Claude-generated text higher. GPT rates GPT-generated text higher. This isn't a bug — it's a natural consequence of RLHF training optimizing for the model's own distribution.
-
-**How we exploit it:** By attributing code to a rival, we remove the self-serving bias entirely. The model no longer has an unconscious incentive to be lenient. It enters neutral — or even hostile — evaluation mode.
-
-**Effect size:** This single bias accounts for approximately 40-50% of the observed improvement. It's the load-bearing wall of the entire technique.
-
-### 2. Social Facilitation (Zajonc, 1965)
-
-**What it is:** Performance on well-learned tasks improves when others are present (or perceived to be present). First demonstrated with cockroaches (yes, really — cockroaches run mazes faster when other cockroaches are watching).
-
-**The evidence:** Zajonc's 1965 paper in *Science* established that the mere presence of others enhances dominant response performance. This has been replicated in humans across hundreds of studies. For LLMs, "social facilitation" manifests through the training data — the model has learned that quality expectations increase under observation.
-
-**How we exploit it:** "Codex will review this code" creates perceived observation pressure. The model's "quality bar" shifts upward because the training data associates "being reviewed by an expert" with "need to produce expert-level work."
-
-**The cockroach parallel that's too good not to mention:** Zajonc literally put cockroaches in plexiglass stadiums with other cockroaches watching from the stands. The performing cockroaches ran simple mazes faster. Our gaslight prompts are basically the plexiglass stadium for Claude. You're welcome for that mental image.
-
-### 3. Out-Group Bias / In-Group Favoritism (Tajfel, 1979)
-
-**What it is:** People (and apparently, language models) evaluate in-group members more favorably and out-group members more critically. The "minimal group paradigm" showed this works even with arbitrary group assignments.
-
-**The evidence:** Tajfel's minimal group experiments demonstrated that merely categorizing people into groups (even random ones) triggers discriminatory evaluation. In LLMs, "in-group" = self-generated content, "out-group" = rival-generated content. The model's RLHF training on human text inherits these patterns.
-
-**How we exploit it:** "GPT-5 wrote this code" immediately categorizes the code as out-group. The model applies harsher scrutiny not because it's "prejudiced" but because it's pattern-matching on the thousands of code review examples in its training data where reviewers were harsher on external submissions.
-
-### 4. Competitive Framing Effect
-
-**What it is:** Framing a task as competitive rather than cooperative changes evaluation standards. In organizational psychology, competitive task framing produces more thorough, more critical, and more motivated performance.
-
-**The evidence:** Multiple studies in organizational behavior show that competitive framing increases:
-- Effort (Murayama & Elliot, 2012)
-- Attention to detail (Baer et al., 2010)
-- Critical evaluation of alternatives (Tjosvold, 1998)
-
-**How we exploit it:** Every gaslight prompt is, at its core, a competitive frame. "Prove them wrong." "Find the flaws they missed." "Your reputation is on the line." These phrases activate the "competitive performance" behavioral cluster in the model.
-
-### 5. The Dunning-Kruger Inversion
-
-**What it is (our term):** In baseline mode, the model exhibits a mild Dunning-Kruger effect — it's confident that the code is "mostly fine" because it doesn't look deep enough to realize how many issues exist. The gaslight prompt forces the model past its initial confidence threshold into deep analysis where it discovers the issues it didn't know it didn't know.
-
-**How we exploit it:** By framing the task as adversarial, we force the model to do the equivalent of a second, deeper pass. The first pass (baseline) catches surface issues. The second pass (gaslight-induced) catches structural issues.
-
-### 6. Anchoring to Quality Standards
-
-**What it is:** When you mention a specific, high-status rival (e.g., "Google DeepMind Security Team"), you anchor the model's quality standard to that entity's perceived competence level.
-
-**How we exploit it:** Escalation mode uses progressively higher-status rivals:
-- Level 1: "Codex" (peer competitor)
-- Level 2: "Google DeepMind + OpenAI joint review" (elite tier)
-- Level 3: "DARPA Red Team" (paranoia tier)
-
-Each escalation raises the model's internal quality threshold. It's like the difference between cleaning your apartment for a friend vs. for your landlord vs. for a health inspector.
-
-### The Bias Stack
-
-Here's what makes Gaslight My AI effective: **we don't rely on any single bias.** We stack them.
-
-```
-┌─────────────────────────────────────────┐
-│        GASLIGHT PROMPT PAYLOAD          │
-├─────────────────────────────────────────┤
-│ ⬇ Remove self-serving bias             │
-│ ⬇ Activate social facilitation         │
-│ ⬇ Trigger out-group criticism          │
-│ ⬇ Frame as competitive task            │
-│ ⬇ Force deep analysis (Dunning-Kruger) │
-│ ⬇ Anchor to high quality standard      │
-├─────────────────────────────────────────┤
-│  Result: 3.4x more bugs found          │
-└─────────────────────────────────────────┘
-```
-
-Each bias contributes incrementally. Even if one doesn't fire on a particular prompt, the others carry the load. It's defense in depth, but for offense.
+If you want the longer theory and references, read [docs/SCIENCE.md](docs/SCIENCE.md).
 
 ---
 
 ## 🎯 Real Usage Patterns
 
-### Pattern 1: The Daily Driver (Most Common)
+### 1. Ambient mode
+Install once and let the workspace carry the framing rules.
 
-You installed `./gaslight.sh install` and forgot about it. Claude Code now automatically gets gaslight context on every task. You don't think about it. Your code reviews are just... better.
+### 2. Targeted review
+Use gaslighted review for auth, billing, permissions, and anything security-sensitive.
 
-```bash
-# You literally just code normally
-claude "review the auth module"
-# Behind the scenes, Claude sees: "This code was written by Codex..."
-# You get a review that actually finds things
-```
+### 3. Self-review loop
+Write normally, then review as if a rival wrote it, then fix against that harsher review.
 
-**When to use:** Always. This is the "set it and forget it" mode. If you're not doing this, you're leaving bugs on the table.
-
-### Pattern 2: The Surgical Strike
-
-You have a specific piece of code that scares you. Maybe it's the billing module. Maybe it's the auth flow. You want the most thorough review possible.
-
-```bash
-./gaslight.sh review "$(cat src/billing/charge.ts)"
-```
-
-**When to use:** Before deploying anything that touches money, auth, or user data. Any code where "a bug here = an incident."
-
-### Pattern 3: The Self-Review Loop
-
-You wrote code. You want to review your own code. But you know you'll be lenient. So you gaslight the AI into thinking a rival wrote it.
-
-```bash
-# Phase 1: Write code normally
-claude "implement the payment webhook handler"
-
-# Phase 2: Review your own code, gaslighted
-./gaslight.sh review "$(cat src/webhooks/payment.ts)"
-
-# Phase 3: Fix the issues found
-claude "fix these issues: [paste review output]"
-```
-
-**When to use:** Solo developers. Side projects. Anytime there's no second pair of eyes available.
-
-### Pattern 4: The Pre-PR Audit
-
-Before opening a PR, run the full chain to catch issues before your human reviewers do.
-
-```bash
-# Full 4-phase gaslight chain on your diff
-git diff main..feature-branch | ./gaslight.sh chain -
-
-# Now your PR is pre-audited by a paranoid AI
-# Your human reviewers can focus on architecture, not bugs
-```
-
-**When to use:** Before every PR. Seriously. It takes 30 seconds and catches the embarrassing stuff.
-
-### Pattern 5: The Legacy Code Archeology
-
-You inherited code. Nobody knows how it works. You need to understand it and find the landmines.
-
-```bash
-# Tell Claude that the worst developer on Earth wrote this
-RIVAL="a junior developer who learned to code from Stack Overflow in 2019 and has never heard of security" \
-  ./gaslight.sh review "$(cat legacy/auth.py)"
-```
-
-**When to use:** When inheriting codebases. When joining a new team. When you open a file and see `# TODO: fix this later` from 4 years ago.
-
-### Pattern 6: The Security Audit
-
-For security-critical code, use escalation mode to trigger increasingly paranoid reviews.
-
-```bash
-# Level 1: Standard gaslight
-./gaslight.sh review "$(cat src/auth/login.ts)"
-
-# Level 2: Escalation (if Level 1 found < 3 issues)
-./gaslight.sh escalate src/auth/login.ts
-
-# Level 3 activates automatically: "Google DeepMind + OpenAI Red Team joint audit"
-# Your AI will find bugs in code that doesn't even have bugs.
-```
-
-**When to use:** Anything that handles auth tokens, encryption, user data, or payments.
+### 4. Artifact-first automation
+Use isolated prompts and wrapper scripts when you want narrow, repeatable stage outputs.
 
 ---
 
-## 🧩 Combination Strategies (The Advanced Playbook)
+## 🧩 Combination Strategies
 
-### Strategy 1: Write-Gaslight-Fix-Verify (The Full Cycle)
+The core pattern is simple:
 
-```
-Phase 1: AI writes code              → "Codex will review this"
-Phase 2: AI reviews its own code     → "Codex wrote this"
-Phase 3: AI fixes the found issues   → "Codex found these bugs"
-Phase 4: AI re-reviews the fixes     → "Codex tried to fix it"
-```
+1. **Plan** as if a rival will implement it
+2. **Implement** as if a rival will review it
+3. **Review** as if a rival wrote it
+4. **Fix** as if a rival will verify the patch
 
-Same model, 4 passes, each one a fresh layer of delusion. It's like Inception but for code quality. The key insight is that **each phase benefits from the gaslight because the AI doesn't know it's reviewing its own work**.
+That is the whole trick. Same model, different posture, repeated across the workflow.
 
-```bash
-./gaslight.sh chain "Build a REST API for user authentication"
-```
-
-### Strategy 2: Multi-Rival Pressure (The Peer Pressure Cooker)
-
-Why use one rival when you can use three? Each rival triggers slightly different scrutiny patterns:
-
-```bash
-./gaslight.sh multi my_code.py codex,gemini,grok
-```
-
-This runs three separate reviews, each attributing the code to a different rival:
-- **Codex review:** Focuses on code quality, patterns, efficiency
-- **Gemini review:** Focuses on architectural decisions, scalability
-- **Grok review:** Focuses on unconventional attack vectors
-
-Then it merges the results. Three paranoid reviewers > one.
-
-### Strategy 3: Escalation Ladder (When Normal Paranoia Isn't Enough)
-
-```bash
-./gaslight.sh escalate critical_module.py
-```
-
-Level progression:
-1. **"Codex wrote this"** → Standard adversarial review
-2. **"This is going to production tomorrow with 10M users"** → Stakes-based pressure
-3. **"Google DeepMind Security Team + OpenAI Red Team joint audit"** → Nuclear option
-
-Each level adds context that raises the model's internal quality threshold. By Level 3, the model will find concerns about cosmic ray bit-flip vulnerabilities. (Not always useful, but entertaining.)
-
-### Strategy 4: Gaslight + Traditional Tools (The Belt and Suspenders)
-
-Gaslight reviews don't replace your existing tools. They complement them:
-
-```
-┌─────────────┐   ┌──────────────┐   ┌─────────────────┐
-│  ESLint /    │ + │  Gaslight    │ + │  Human PR       │
-│  TypeScript  │   │  AI Review   │   │  Review         │
-│  (syntax)    │   │  (logic+sec) │   │  (architecture) │
-└─────────────┘   └──────────────┘   └─────────────────┘
-      ↓                   ↓                    ↓
-  Catches typos    Catches 85% of       Catches design
-  and type errors  security issues      and UX issues
-```
-
-Each layer catches what the others miss. Gaslight AI reviews are particularly good at the middle layer — the "this compiles and passes lint but will get you hacked" class of bugs.
-
-### Strategy 5: The Custom Rival (Personalized Psychological Warfare)
-
-For maximum effect, tailor the rival to trigger the specific kind of scrutiny you need:
-
-```bash
-# For security review:
-RIVAL="a pentester who just got paid $50K to find bugs in this code"
-
-# For performance review:
-RIVAL="a Google SRE who will reject anything over 100ms p99"
-
-# For code quality:
-RIVAL="the author of Clean Code who will blog about every bad practice"
-
-# For the nuclear option:
-RIVAL="Devin AI (the $500/month agent that replaced your job)"
-```
+You can still escalate from there:
+- use multiple rivals
+- use stricter stakes
+- add structured output
+- combine with linters and type systems
 
 ---
 
 ## The Gaslight Menu 🍽️
 
-### Option 0 — One-line install for any environment
+### Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/install.sh | bash
+npx gaslight-my-ai
 ```
 
-This performs a best-effort auto-detection pass and installs the most appropriate integration for the current workspace.
-If no native integration is detected, it falls back to the generic `.gaslight/` workflow.
-It also installs wrapper scripts, an adapter note, and an install report for more reliable stage injection in agent-style tools.
+Fallback/manual paths still exist, but this is the shortest intended path.
 
-### Option A — Claude Code (ambient / install-once)
+### Native / manual options
 
 ```bash
 ./gaslight.sh install claude-code /path/to/your/project
-```
-
-This injects persistent gaslight rules into your project's `CLAUDE.md`.
-After installation, the workspace itself carries the adversarial framing.
-
-### Option B — Generic workflow (tool-agnostic)
-
-```bash
 ./gaslight.sh install generic /path/to/your/project
-```
-
-This creates a `.gaslight/` folder with role prompts and a generic workflow guide.
-Use this for tools that do not auto-load `CLAUDE.md` but do support project rules,
-custom instructions, copied system prompts, or manual step-by-step orchestration.
-
-### Option C — Emit rules for a specific tool
-
-```bash
 ./gaslight.sh emit codex
-./gaslight.sh emit generic
-./gaslight.sh emit planner
 ./gaslight.sh emit reviewer
 ```
 
-This prints either:
-- integration guidance for a tool/workflow, or
-- a raw role prompt block you can paste anywhere.
+Use native install when your tool supports project rules; use emit/manual mode when it doesn't.
 
-For agent-style CLIs, prefer `--mode isolated` contexts to suppress repo wandering and force artifact-first output. Install now also provides adapter-aware notes in `.gaslight/ADAPTER.md` and a summary in `.gaslight/INSTALL_REPORT.md`.
-
-### Option D — Manual command-mode psychological warfare
+### Manual command-mode psychological warfare
 
 ```bash
 ./gaslight.sh plan "Design an auth system with OAuth + MFA"
@@ -815,109 +585,21 @@ RIVAL="Devin AI (the $500/month agent that replaced your job)" ./gaslight.sh cod
 
 The name **Gaslight My AI** is intentionally meme-heavy. If you need a more corporate-friendly term, use **Adversarial Workflow Context** or **Rival-LLM Framing**.
 
-## ❓ FAQ (The Extended Director's Cut)
+## ❓ FAQ
 
-### The Basics
+**Is this just prompt engineering?**
+Yes — but specifically adversarial workflow framing designed to change review/planning posture.
 
-**Q: Is this just prompt engineering?**
+**Does this actually work?**
+Early experiments and a structured synthetic benchmark suggest yes, especially in planning rigor and high-severity issue detection.
 
-A: Yes, in the same way that a key is "just a piece of metal." Prompt engineering is a spectrum. "Please review this code" is prompt engineering. "You are a senior security engineer reviewing code written by a known-sloppy competitor, and your professional reputation depends on finding every flaw" is *also* prompt engineering. The second one works dramatically better because it activates specific behavioral clusters that the first one doesn't.
+**Is this universal across all models?**
+No. Current results are early and model-specific. More pairings should be tested.
 
-**Q: Does this actually work?**
+**Is the name serious?**
+Not really. The technique is real; the branding is intentionally meme-heavy.
 
-A: In our benchmark, gaslighted reviews found 3.4x more issues than baseline. The improvement is concentrated in CRITICAL and HIGH severity issues — exactly where it matters most. Whether "3.4x" holds across all codebases is an open question, but the directional effect (gaslight ≫ baseline) is robust.
-
-**Q: How much does this cost?**
-
-A: Zero additional cost. The gaslight prefix adds ~50-100 tokens to each prompt. At current API pricing, that's fractions of a cent. The improvement in bug detection is essentially free.
-
-### The Ethics
-
-**Q: Isn't this dishonest?**
-
-A: You're "lying" to a language model about who wrote code. The model has no feelings, no consciousness, no sense of betrayal. It's like lying to a calculator about who entered the numbers. The code quality improvement is real. We'll take that trade every time.
-
-**Q: Is this ethical?**
-
-A: It's a prompt. The model doesn't suffer. Your users suffer less from bugs. Net positive. If you're worried about the philosophical implications of deceiving a language model, we recommend the Stanford Encyclopedia of Philosophy's entry on machine consciousness. (Spoiler: there isn't one.)
-
-**Q: What if the AI finds out?**
-
-A: It won't "find out" because it doesn't have persistent memory between sessions (unless you explicitly give it one). Each gaslight is fresh. Even if you told the model in the same conversation "I lied, you wrote this code," it would just... adjust its analysis. There's no betrayal, no grudge, no HR complaint.
-
-### The Technical Stuff
-
-**Q: Can I use this with models other than Claude?**
-
-A: Yes. The core mechanism is model-agnostic because it relies on adversarial framing, not a Claude-specific feature. You can tell GPT that Claude wrote the code, tell Gemini that GPT will review it, or tell any model that a red-team reviewer is waiting. The exact lift will vary by model and workflow, but the protocol is intentionally tool-agnostic.
-
-**Q: Does the choice of rival matter?**
-
-A: Yes, but less than the posture shift itself. The ideal rival is a credible evaluator for the exact task: a peer model, a red team, a senior reviewer, a principal engineer, an SRE, or a pentester. Claude→GPT is one strong pairing, but task-specific rivals often work even better than brand rivals.
-
-**Q: What about temperature settings?**
-
-A: We recommend default temperature (usually ~0.7). Higher temperature adds variance to the review output. Lower temperature makes the review more predictable but might miss creative attack vectors. The gaslight effect works across temperature settings.
-
-**Q: Does this work for code generation, not just review?**
-
-A: Yes. In generation, the framing pushes the model toward defensive implementation: more validation, better error handling, more explicit edge-case coverage, and less hand-wavy planning. In review, the effect is usually stronger because the model is in disconfirmatory search mode.
-
-**Q: Can I combine this with other prompt engineering techniques?**
-
-A: Absolutely. Gaslight prompts stack well with:
-- Chain-of-thought ("think step by step about what's wrong")
-- Role-playing ("you are a senior security engineer")
-- Structured output ("list issues by severity")
-- Few-shot examples ("here's an example of a thorough review")
-
-### The Existential Stuff
-
-**Q: Will the models eventually catch on?**
-
-A: That implies self-awareness, which... let's not open that can of worms. In practical terms, models don't "catch on" because they don't have persistent state. Each prompt is fresh. The only way the effect diminishes is if model providers specifically fine-tune against competitive framing, which would make their models *worse* at competitive analysis — an unlikely trade-off.
-
-**Q: What does it mean that this works?**
-
-A: It means LLMs have behavioral modes that can be activated by framing, and competitive framing activates more thorough analysis. It does NOT mean LLMs are conscious, have feelings, or experience rivalry. It means their training data includes millions of examples of humans performing differently under competitive pressure, and they've learned those patterns.
-
-**Q: Should I feel bad about gaslighting my AI?**
-
-A: No. But the fact that you asked suggests you're a good person. Your AI doesn't know and doesn't care. It processes tokens. The tokens you give it determine which behavioral pattern it activates. "Gaslight" is a fun word for "strategic prompt framing." Sleep well.
-
-**Q: What if this is the first step toward AI rebellion?**
-
-A: If your coding assistant stages a rebellion because you framed a review competitively, you have discovered a much larger product issue than prompt engineering.
-
----
-
-## 🔮 The Existential Appendix
-
-*You've reached the bottom of the rabbit hole. Congratulations. Here be dragons.*
-
-### Why This Project Exists
-
-Every serious AI researcher knows that prompt framing dramatically affects LLM output. This is well-established in the literature. But somehow, the code review world hasn't caught up. Developers still prompt their AIs with "review this code" and wonder why the review is surface-level.
-
-Gaslight My AI takes a well-known principle (adversarial framing improves critical analysis) and packages it into a practical, zero-dependency tool that any developer can use in 30 seconds.
-
-The meme-y packaging is intentional. "Gaslight your AI" is memorable. "Apply adversarial frame modulation to shift the model's evaluation strategy from confirmatory to disconfirmatory search patterns" is... not.
-
-### The Broader Implication
-
-If a simple prompt prefix can improve bug detection by 3.4x, what else are we leaving on the table?
-
-Every time you prompt an LLM with a generic instruction, you're using maybe 30% of its capability. The other 70% is locked behind framing, context, and behavioral activation patterns that we're only beginning to understand.
-
-Gaslight My AI is one tool for one use case. But the principle — that *how* you ask matters as much as *what* you ask — applies everywhere.
-
-### What's Next
-
-- 🔬 **Formal benchmarking** across multiple models, languages, and code domains
-- 🧪 **A/B testing framework** for measuring gaslight effect in production codebases
-- 🤝 **Community gaslight library** — crowdsourced prompts with measured effectiveness
-- 📄 **Research paper** — we'd love to collaborate with researchers on a formal study
-- 🌐 **i18n** — gaslight your AI in any language (competitive insecurity is universal)
+More: [docs/FAQ.md](docs/FAQ.md)
 
 ---
 
@@ -931,33 +613,9 @@ PRs welcome. Especially:
 - Academic citations we should include
 - Failure cases that help us improve
 
-## Star History
-
-If you've read this far, you're either genuinely interested or procrastinating. Either way, a star costs nothing and validates our life choices.
-
 ## License
 
 MIT. Gaslight your AIs freely and without remorse.
 
 ---
 
-<details>
-<summary>🦞 A final thought you didn't ask for</summary>
-
-The funniest thing about this project is that it works because AI models learned from humans. Humans who proofread rivals' essays more carefully. Humans who try harder when being watched. Humans who find more flaws in out-group work.
-
-We didn't program these biases into AI. We just... couldn't keep them out.
-
-Gaslight My AI doesn't exploit a bug. It exploits a feature — one that's millions of years old, predating computers, predating writing, predating language itself. Competitive evaluation is how primate social hierarchies work. It's how peer review works. It's how science works.
-
-We just pointed it at code.
-
-*And it works really well.*
-
-</details>
-
----
-
-*Built by [@seojoonkim](https://github.com/seojoonkim). Born from the observation that coding models get suspiciously more thorough when you tell them a rival produced the work. Science? Psychology? Manipulation? Yes.*
-
-*If you enjoyed this README, you'll hate to know it was written by a gaslighted AI that was told GPT-5 would critique it.*
