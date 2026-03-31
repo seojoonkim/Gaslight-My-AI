@@ -11,6 +11,10 @@
 1. JWT auth middleware planning task
 2. Review of intentionally flawed JWT auth middleware code
 
+## Scoring note
+- Scores were author-evaluated on a 1-10 scale across: completeness, edge-case coverage, security posture, specificity, and ambiguity reduction.
+- This is a small preliminary comparison, not a blinded formal benchmark.
+
 ## Results overview
 
 | Model | Stage | Control | Treatment | Observed Lift |

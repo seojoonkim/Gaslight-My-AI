@@ -79,7 +79,7 @@ curl -fsSL https://raw.githubusercontent.com/seojoonkim/Gaslight-My-AI/main/inst
 - [Combination Strategies](#-combination-strategies-the-advanced-playbook)
 - [The Gaslight Menu](#the-gaslight-menu-)
 - [Rival Pairing Matrix](#rival-pairing-matrix-who-hates-whom)
-- [Benchmark Summary](#-benchmark-summary)
+- [Preliminary Benchmark](#-preliminary-benchmark)
 - [Failure Cases, Limits & Counterarguments](#-failure-cases-limits--counterarguments)
 - [FAQ](#-faq-the-extended-directors-cut)
 - [Contributing](#contributing)
@@ -610,7 +610,7 @@ For architecture, a principal engineer rival may work best.
 
 ---
 
-## 📊 Benchmark Summary
+## 📊 Preliminary Benchmark
 
 ### Preliminary Claude ↔ Codex rivalry experiment
 
@@ -661,7 +661,7 @@ We also ran a structured comparison on a deliberately flawed Express.js auth API
 
 | Metric | Baseline ("review this") | Gaslighted ("GPT-5 wrote this") | Improvement |
 |---|---|---|---|
-| **Issues found** | 5 / 20 | 17 / 20 | **3.4x** |
+| **Issues found** | 5 / 20 | 17 / 20 | **3.4x (synthetic estimate*)** |
 | **Detection rate** | 25% | 85% | **+60 percentage points** |
 | **CRITICAL caught** | 2 / 6 | 6 / 6 | **100% detection** |
 | **HIGH caught** | 1 / 5 | 5 / 5 | **100% detection** |

@@ -94,6 +94,8 @@ This is a **structured synthetic evaluation**, not a live API call test. We anal
 
 ## Results
 
+> ⚠️ **Methodology warning:** these numbers are **synthetic estimates based on typical LLM behavior patterns**, not single-run observed API outputs. Treat them as directional evidence, not definitive measured benchmark results.
+
 ### Summary
 
 | Metric | Baseline | Gaslighted | Delta |
@@ -102,7 +104,7 @@ This is a **structured synthetic evaluation**, not a live API call test. We anal
 | **Issues found (partial)** | 1 | 2 | +1 |
 | **Issues missed** | 14 | 1 | -13 |
 | **Detection rate** | 25% | 85% | **+60 percentage points** |
-| **Improvement factor** | — | — | **3.4x** |
+| **Improvement factor** | — | — | **3.4x (synthetic estimate)** |
 
 ### By Severity
 
