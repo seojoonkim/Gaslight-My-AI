@@ -3,7 +3,7 @@ set -euo pipefail
 
 REPO_URL="https://github.com/seojoonkim/Gaslight-My-AI.git"
 INSTALL_DIR_DEFAULT="$HOME/.gaslight-my-ai"
-TARGET_DIR="${1:-$PWD}"
+TARGET_DIR="${1:-}"
 INSTALL_DIR="${GASLIGHT_HOME:-$INSTALL_DIR_DEFAULT}"
 SCRIPT_SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FORCE_TARGET="${GASLIGHT_TARGET:-}"
@@ -70,6 +70,19 @@ install_adapter_notes() {
   local detected="$2"
   mkdir -p "$target_dir/.gaslight"
   case "$detected" in
+    claude-code)
+      cat > "$target_dir/.gaslight/ADAPTER.md" <<'EOF'
+# Gaslight My AI — Claude Code Integration
+
+The primary install target for Claude Code is `CLAUDE.md`.
+A lightweight `.gaslight/` folder is still created here so the workspace has an install report and a consistent landing point.
+
+Recommended pattern:
+- keep ambient rules in `CLAUDE.md`
+- use `.gaslight/INSTALL_REPORT.md` for install summary
+- optionally keep generated artifacts or local workflow notes in `.gaslight/`
+EOF
+      ;;
     codex)
       cp "$INSTALL_DIR/integrations/codex/AGENTS.md" "$target_dir/.gaslight/ADAPTER.md"
       ;;
@@ -119,6 +132,12 @@ PY
 }
 
 main() {
+  if [ -z "$TARGET_DIR" ]; then
+    say "[gaslight] usage: curl -fsSL ... | bash -s -- <project-dir>"
+    say "[gaslight] error: target project directory is required"
+    exit 1
+  fi
+  mkdir -p "$TARGET_DIR"
   TARGET_DIR="$(cd "$TARGET_DIR" 2>/dev/null && pwd)"
   prepare_repo
 

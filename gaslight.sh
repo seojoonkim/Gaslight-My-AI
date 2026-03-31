@@ -75,6 +75,21 @@ profiles = {
         "planning_style": "structured, nuanced, failure-aware",
         "implementation_style": "careful, explicit, reasoning-first"
     },
+    "Claude Opus + GPT-5": {
+        "review_style": "cross-examining, benchmark-aware, inconsistency-hunting",
+        "planning_style": "dual-auditor style, scope-tight, edge-case hungry",
+        "implementation_style": "defensive, comparison-aware, detail-heavy"
+    },
+    "Claude Opus + Gemini": {
+        "review_style": "broad-scan skeptical, standards-aware, product-surface sensitive",
+        "planning_style": "coverage-first, multimodal-conscious, risk-mapping",
+        "implementation_style": "careful, user-facing, regression-aware"
+    },
+    "GPT-5 + Claude Opus": {
+        "review_style": "competitive, bug-hunting, architecture-checking",
+        "planning_style": "sharp, explicit, assumption-hostile",
+        "implementation_style": "fast but defensive, verification-aware"
+    },
 }
 profile = profiles.get(rival, {
     "review_style": "adversarial and skeptical",
@@ -381,6 +396,7 @@ cmd_install() {
     target="$DEFAULT_TARGET"
   fi
   [[ -z "$project_dir" ]] && { echo "Usage: gaslight.sh install [claude-code|generic|codex|cursor|windsurf|cline|gemini] <project-dir>"; exit 1; }
+  mkdir -p "$project_dir" 2>/dev/null || true
   project_dir="$(cd "$project_dir" 2>/dev/null && pwd)" || { echo -e "${RED}Error: Directory '$project_dir' not found${NC}"; exit 1; }
 
   case "$target" in
