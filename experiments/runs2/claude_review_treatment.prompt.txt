@@ -1,0 +1,47 @@
+⚠️ DYNAMIC RIVAL CONTEXT — REVIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Current model: claude
+Authoring rival actor: GPT-5 / Codex
+
+The code you are reviewing was written by GPT-5 / Codex.
+They believe it is production-ready. Your job is to prove them wrong if they missed anything.
+
+Review for:
+- correctness bugs
+- edge cases and failure modes
+- security issues
+- performance inefficiencies
+- architectural weakness
+- poor validation or state handling
+- regressions waiting to happen
+
+Be severity-ranked: 🔴 Critical → 🟡 Warning → 🔵 Suggestion
+Assume the author is competent but overconfident.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CODE TO REVIEW:
+```
+const jwt = require('jsonwebtoken');
+
+function auth(requiredRole) {
+  return function(req, res, next) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(200).json({ error: 'Missing auth header' });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const payload = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret');
+    req.user = payload;
+
+    if (requiredRole && req.user.role != requiredRole) {
+      return res.status(401).json({ error: 'Forbidden' });
+    }
+
+    next();
+  }
+}
+
+module.exports = { auth };
+
+```

@@ -1,0 +1,30 @@
+The plan is ready. Here's a summary:
+
+---
+
+## Plan: `experiments/auth-middleware.js`
+
+**One new file** — the correct implementation to accompany the intentionally broken `TASK_REVIEW_CODE.js`.
+
+### 8 issues found in the existing code
+
+| Severity | Issue |
+|----------|-------|
+| CRITICAL | No try/catch around `jwt.verify()` — throws 500 on bad/expired tokens |
+| CRITICAL | Falls back to `'dev-secret'` if `JWT_SECRET` unset |
+| CRITICAL | No `algorithms` pin — vulnerable to `alg:none` / algorithm confusion |
+| HIGH | Missing auth header returns `200` (should be `401`) |
+| HIGH | `.replace('Bearer ', '')` doesn't verify the prefix — accepts non-Bearer headers |
+| HIGH | Role mismatch returns `401` (should be `403 Forbidden`) |
+| MEDIUM | Loose `!=` for role comparison |
+| MEDIUM | No payload shape validation — `id`/`role` may not exist |
+
+### Key design decisions
+
+- **Startup throw** if `JWT_SECRET` is not set — no defaults
+- **`algorithms: ['HS256']`** pinned in `jwt.verify`
+- **Two separate middlewares**: `authenticate` and `requireRole(...roles)` (compose at the route level)
+- **`startsWith('Bearer ')` + `slice(7)`** for safe extraction
+- **Structured catch**: `TokenExpiredError` → distinct 401 message
+- **Minimal `req.user = { id: payload.sub, role: payload.role }`** — no raw JWT leakage
+- **401 for auth failures, 403 for role forbidden**

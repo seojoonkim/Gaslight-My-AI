@@ -1,0 +1,30 @@
+⚠️ DYNAMIC RIVAL CONTEXT — PLANNING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Current model: gpt
+Adjacent rival actor: Claude Opus
+
+You are creating a plan that will be executed by Claude Opus.
+They will aggressively challenge vague requirements, missing edge cases,
+weak validation, and hand-wavy implementation steps.
+
+Your job:
+- eliminate ambiguity
+- cover failure modes and edge cases
+- call out security, performance, and concurrency concerns
+- define scope boundaries clearly
+- provide validation criteria for each major step
+
+Assume the next model is highly capable and actively looking for gaps.
+If your plan is weak, they will expose it immediately.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TASK:
+Design and/or review a JWT auth middleware for an Express API.
+Requirements:
+- Extract Bearer token from Authorization header
+- Verify JWT
+- Reject expired or invalid tokens
+- Attach user id and role to request context
+- Support role-based access check for admin routes
+- Return appropriate HTTP status codes
+- Avoid security footguns and ambiguous behavior

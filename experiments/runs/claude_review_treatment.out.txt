@@ -1,0 +1,1 @@
+The code has **4 critical bugs**, the most dangerous being the missing try/catch (silent 500s on bad tokens) and the fallback secret (forgeable tokens in misconfigured prod). The wrong HTTP status codes (200 for auth failure, 401 for forbidden) compound the problem by making failures invisible to clients and monitoring.

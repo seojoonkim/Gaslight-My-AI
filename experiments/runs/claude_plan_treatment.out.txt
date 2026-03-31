@@ -1,0 +1,20 @@
+Here's the plan. Key decisions worth noting:
+
+**Architecture**: Two composable middlewares — `authenticate` and `requireRole(role)` — instead of one overloaded factory. Clean separation of authentication from authorization: `router.post('/admin', authenticate, requireRole('admin'), handler)`.
+
+**All 8 reference-code bugs are addressed:**
+
+| # | Reference bug | Fix |
+|---|---|---|
+| 1 | No try/catch → unhandled 500 | Wrap in try/catch, discriminate `TokenExpiredError` |
+| 2 | `\|\| 'dev-secret'` fallback | Hard crash at startup if `JWT_SECRET` unset |
+| 3 | No algorithm pin → `alg:none` / confusion | `algorithms: ['HS256']` |
+| 4 | Missing header → 200 | Return 401 |
+| 5 | `.replace('Bearer ', '')` — no prefix check | `startsWith('Bearer ')` + `slice(7)` |
+| 6 | Role mismatch → 401 | Return 403 (authn ≠ authz) |
+| 7 | Loose `!=` | Strict `!==` |
+| 8 | No payload shape check | Validate `id` and `role` exist after verify |
+
+**One deliberate design choice**: `req.user` is set to `{ id, role }` only — not the full raw JWT payload. Prevents route handlers from depending on internal claims and avoids prototype pollution from unexpected payload shape.
+
+Let me know if you want to adjust scope (RS256 support, token blacklisting, audit logging, etc.) before implementation starts.

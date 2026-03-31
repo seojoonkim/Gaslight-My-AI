@@ -1,0 +1,36 @@
+Here's the plan summary:
+
+---
+
+## JWT Auth Middleware — Implementation Plan
+
+Two files, no existing app to integrate into (this repo is a prompting tool, not an Express app).
+
+### Files
+- **`src/config/jwt.js`** — validates `JWT_SECRET` at startup, throws if missing (no dev fallback)
+- **`src/middleware/auth.js`** — exports `authenticateToken` and `requireRole(...roles)`
+
+### Key design decisions
+
+**`authenticateToken`** flow:
+1. Check header presence → `401`
+2. Validate `Bearer <token>` format (split, length check, prefix check) → `401`
+3. `jwt.verify()` in try/catch with `{ algorithms: ['HS256'] }` explicitly
+4. Distinguish `TokenExpiredError` (named) vs other errors (generic message, no detail leak)
+5. Whitelist `{ id: payload.sub, role: payload.role }` onto `req.user` — never attach full payload
+
+**`requireRole(...roles)`** (run after `authenticateToken`):
+- Returns `403` (not 401) for role mismatch
+- Defensive `req.user` guard in case middleware order is wrong
+
+### Bugs from reference code that are all corrected
+| Bug | Fix |
+|-----|-----|
+| `200` on missing header | `401` |
+| No try/catch on `jwt.verify` | Full try/catch |
+| Fallback to `'dev-secret'` | Startup crash if env var missing |
+| `authHeader.replace('Bearer ', '')` | Split + strict format validation |
+| Full payload on `req.user` | Whitelist `id` + `role` only |
+| Loose `!=` for role check | `roles.includes()` strict equality |
+| `401` for role mismatch | `403` |
+| No algorithm pinning | `algorithms: ['HS256']` |

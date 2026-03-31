@@ -1,0 +1,94 @@
+Here is the ranked findings:
+
+---
+
+## Critical
+
+### 1. Unhandled exception crashes the server
+`jwt.verify()` throws synchronously on invalid, expired, or tampered tokens. With no `try/catch`, any bad token produces an unhandled exception — a 500 or outright process crash depending on your error handler.
+
+```js
+// current — throws on bad token
+const payload = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret');
+
+// fix
+let payload;
+try {
+  payload = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
+} catch (err) {
+  return res.status(401).json({ error: 'Invalid token' });
+}
+```
+
+### 2. Hardcoded fallback secret allows token forgery
+`process.env.JWT_SECRET || 'dev-secret'` silently falls back to a known string if the env var is missing in production. An attacker can sign arbitrary tokens with `'dev-secret'` and gain access.
+
+**Fix:** Fail fast at startup — never fall back:
+```js
+const secret = process.env.JWT_SECRET;
+if (!secret) throw new Error('JWT_SECRET env var is required');
+```
+
+### 3. 200 status returned for auth failure
+```js
+return res.status(200).json({ error: 'Missing auth header' });
+//                  ^^^
+```
+HTTP 200 means success. Clients (and proxies, logging systems, monitoring) cannot distinguish a failed auth from a successful response. Should be `401`.
+
+---
+
+## High
+
+### 4. No algorithm pinning — vulnerable to `alg: none` and confusion attacks
+`jwt.verify()` without `{ algorithms: [...] }` may accept tokens signed with `alg: none` or allow RS256/HS256 confusion depending on library version. Always pin:
+```js
+jwt.verify(token, secret, { algorithms: ['HS256'] })
+```
+
+### 5. Fragile Bearer token extraction
+```js
+const token = authHeader.replace('Bearer ', '');
+```
+- If the header is `"bearer token123"` (lowercase), replace does nothing and the full string is passed to `jwt.verify`.
+- If the header is `"Basic abc123"`, it also passes through unchanged.
+- Should validate the scheme explicitly:
+
+```js
+const [scheme, token] = authHeader.split(' ');
+if (scheme !== 'Bearer' || !token) {
+  return res.status(401).json({ error: 'Invalid Authorization header' });
+}
+```
+
+---
+
+## Medium
+
+### 6. Wrong status code for role mismatch (`401` vs `403`)
+```js
+return res.status(401).json({ error: 'Forbidden' });
+//                  ^^^
+```
+`401 Unauthorized` means the request lacks valid credentials. `403 Forbidden` means the server understood the request but refuses it (correct for a role check). These have different semantics for clients and security tooling.
+
+### 7. Loose equality for role comparison
+```js
+if (requiredRole && req.user.role != requiredRole)
+//                                ^^
+```
+`!=` uses type coercion. If `req.user.role` is numeric `1` and `requiredRole` is string `"1"`, this passes. Use `!==`.
+
+---
+
+## Summary table
+
+| # | Severity | Issue |
+|---|----------|-------|
+| 1 | Critical | No `try/catch` — crashes on invalid token |
+| 2 | Critical | Hardcoded fallback JWT secret |
+| 3 | Critical | `200` returned on auth failure |
+| 4 | High | No algorithm pinning (`alg: none` attack) |
+| 5 | High | Naive `Bearer` extraction accepts malformed headers |
+| 6 | Medium | `401` used where `403` is correct |
+| 7 | Medium | `!=` loose equality for role check |
